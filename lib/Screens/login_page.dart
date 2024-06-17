@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shoes/Screens/Sign_in_page.dart';
+import 'package:shoes/Screens/home_screen.dart';
+import 'package:shoes/Screens/recovery_screen.dart';
 
 import '../Widgets/Custom_textfeild.dart';
+import '../Widgets/custom_button.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -93,7 +96,13 @@ class _LoginState extends State<Login> {
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RecoveryScreen(),
+                            ));
+                      },
                       child: Text(
                         'Recovery Password',
                         style: TextStyle(color: Color(0xFF707B81)),
@@ -109,7 +118,7 @@ class _LoginState extends State<Login> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => SignIn(),
+                            builder: (context) => HomeScreen(),
                           ));
                     },
                     style: ElevatedButton.styleFrom(
@@ -157,10 +166,14 @@ class _LoginState extends State<Login> {
                         "Don't Have An Account?",
                         style: TextStyle(color: Color(0xFF707B81)),
                       ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text('Sign Up For Free',
-                            style: TextStyle(color: Colors.black)),
+                      CustomButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => SignUp(),
+                              ));
+                        },
                       ),
                     ],
                   ),

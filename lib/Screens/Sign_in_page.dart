@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shoes/Widgets/Custom_textfeild.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({super.key});
+class SignUp extends StatefulWidget {
+  const SignUp({super.key});
 
   @override
-  State<SignIn> createState() => _SignInState();
+  State<SignUp> createState() => _SignInState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignInState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,14 +52,14 @@ class _SignInState extends State<SignIn> {
 
                   // Welcome Text
                   Text(
-                    'Hello Again!',
+                    'Create Account',
                     style: TextStyle(
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 32,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Airbnb"),
                   ),
                   Text(
-                    "Welcome Back You've Been Missed!",
+                    "Lets Create Account Together",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey,
@@ -86,16 +86,6 @@ class _SignInState extends State<SignIn> {
                   ),
 
                   // Recovery Password
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text(
-                        'Recovery Password',
-                        style: TextStyle(color: Color(0xFF707B81)),
-                      ),
-                    ),
-                  ),
 
                   SizedBox(height: 20),
 
@@ -134,26 +124,6 @@ class _SignInState extends State<SignIn> {
                       'Sign in with Google',
                       style: TextStyle(color: Colors.black),
                     ),
-                  ),
-
-                  SizedBox(height: 150),
-
-                  // Sign Up Text
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Don't Have An Account?",
-                        style: TextStyle(color: Color(0xFF707B81)),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          'Sign Up For Free',
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

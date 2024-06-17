@@ -4,5 +4,6 @@ import 'package:shoes/Screens/splash.dart';
 void main() {
   runApp(MaterialApp(
     home: Splash(),
+    debugShowCheckedModeBanner: false,
   ));
 }
