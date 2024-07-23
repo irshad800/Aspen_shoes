@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shoes/Screens/login_page.dart';
-import 'package:shoes/Screens/splash3.dart';
+import 'package:shoes/Screens/auth/login_page.dart';
+import 'package:shoes/Screens/splash_screens/splash3.dart';
 
 class splash2 extends StatefulWidget {
   splash2({Key? key}) : super(key: key);

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes/Screens/payment_method.dart';
+import 'package:shoes/utils/colors.dart';
 
 class CheckoutPage extends StatefulWidget {
   final num total;
@@ -11,23 +12,22 @@ class CheckoutPage extends StatefulWidget {
 }
 
 class _CheckoutPageState extends State<CheckoutPage> {
-  String contactName = ' ';
-  String address = ' ';
-  String paymentMethod = '--------';
+  String contactName = '';
+  String address = '';
+  String paymentMethod = 'Select Payment Method';
 
   TextEditingController contactNameController = TextEditingController();
   TextEditingController addressController = TextEditingController();
-  TextEditingController paymentMethodController = TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
     contactNameController.text = contactName;
     addressController.text = address;
-    paymentMethodController.text = paymentMethod;
   }
 
-  // Function to update contact info
   void updateContactInfo(String newName) {
     setState(() {
       contactName = newName;
@@ -35,7 +35,6 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
   }
 
-  // Function to update address
   void updateAddress(String newAddress) {
     setState(() {
       address = newAddress;
@@ -43,11 +42,9 @@ class _CheckoutPageState extends State<CheckoutPage> {
     });
   }
 
-  // Function to update payment method
   void updatePaymentMethod(String newMethod) {
     setState(() {
       paymentMethod = newMethod;
-      paymentMethodController.text = newMethod;
     });
   }
 
@@ -55,145 +52,221 @@ class _CheckoutPageState extends State<CheckoutPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Checkout')),
+        backgroundColor: primaryColors,
+        title: Row(
+          children: [
+            Text(
+              'Checkout',
+              style: TextStyle(color: Colors.white, fontFamily: "Airbnb"),
+            ),
+          ],
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text('Contact Information:'),
-            ListTile(
-              title: TextFormField(
-                controller: contactNameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Edit Name'),
-                          content: TextField(
-                            controller: contactNameController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter new name',
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  'Contact Information:',
+                  style: TextStyle(fontFamily: "Airbnb"),
+                ),
+                ListTile(
+                  title: TextFormField(
+                    controller: contactNameController,
+                    decoration: InputDecoration(
+                      labelText: 'Name',
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text('Edit Name'),
+                              content: TextFormField(
+                                controller: contactNameController,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter new name',
+                                  border: OutlineInputBorder(),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter a name';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      updateContactInfo(
+                                          contactNameController.text);
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  child: Text('Save'),
+                                ),
+                              ],
                             ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                updateContactInfo(contactNameController.text);
-                                Navigator.pop(context);
-                              },
-                              child: Text('Save'),
-                            ),
-                          ],
-                        ),
-                      );
+                          );
+                        },
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a name';
+                      }
+                      return null;
                     },
                   ),
                 ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Text('Address:'),
-            ListTile(
-              title: TextFormField(
-                controller: addressController,
-                decoration: InputDecoration(
-                  labelText: 'Address',
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.edit),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: Text('Edit Address'),
-                          content: TextField(
-                            controller: addressController,
-                            decoration: InputDecoration(
-                              hintText: 'Enter new address',
+                SizedBox(height: 10),
+                ListTile(
+                  title: TextFormField(
+                    controller: addressController,
+                    decoration: InputDecoration(
+                      labelText: 'Address',
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.edit),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text('Edit Address'),
+                              content: TextFormField(
+                                controller: addressController,
+                                decoration: InputDecoration(
+                                  hintText: 'Enter new address',
+                                  border: OutlineInputBorder(),
+                                ),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter an address';
+                                  }
+                                  return null;
+                                },
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      updateAddress(addressController.text);
+                                      Navigator.pop(context);
+                                    }
+                                  },
+                                  child: Text('Save'),
+                                ),
+                              ],
                             ),
-                          ),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () {
-                                updateAddress(addressController.text);
-                                Navigator.pop(context);
-                              },
-                              child: Text('Save'),
-                            ),
-                          ],
-                        ),
-                      );
+                          );
+                        },
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter an address';
+                      }
+                      return null;
                     },
                   ),
                 ),
-              ),
-            ),
-            SizedBox(height: 10),
-            Text('Payment Method:'),
-            Row(
-              children: [
-                ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
+                SizedBox(height: 10),
+                Text(
+                  'Payment Method:',
+                  style: TextStyle(fontFamily: "Airbnb"),
+                ),
+                Row(
+                  children: [
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: primaryColors,
+                      ),
+                      onPressed: () async {
+                        final selectedMethod = await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PaymentMethod(),
-                          ));
-                    },
-                    child: Text("Payement Method"))
+                          ),
+                        );
+                        if (selectedMethod != null) {
+                          updatePaymentMethod(selectedMethod);
+                        }
+                      },
+                      child: Text(paymentMethod),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Order Summary:',
+                  style: TextStyle(fontFamily: "Airbnb"),
+                ),
+                ListTile(
+                  title: Text('Subtotal: \$${widget.total.toStringAsFixed(2)}'),
+                ),
+                ListTile(
+                  title: Text('Shipping Cost: \$40'),
+                ),
+                Divider(),
+                ListTile(
+                  title: Text(
+                    'Total: \$${(widget.total + 40).toStringAsFixed(2)}',
+                    style: TextStyle(fontFamily: "Airbnb"),
+                  ),
+                ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: Text('Success'),
+                          content: Image.asset("assets/images/Frame 271.png"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text('OK'),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: primaryColors,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    padding: EdgeInsets.symmetric(vertical: 15),
+                    minimumSize: Size(double.infinity, 50),
+                  ),
+                  child: Text('Sign In', style: TextStyle(color: Colors.white)),
+                ),
               ],
             ),
-            SizedBox(height: 20),
-            Text('Order Summary:'),
-            ListTile(
-              title: Text('Subtotal: \$${widget.total.toStringAsFixed(2)}'),
-            ),
-            ListTile(
-              title: Text('Shipping Cost: 40'),
-            ),
-            Divider(),
-            ListTile(
-              title: Text('Total: \$${(widget.total + 40).toStringAsFixed(2)}'),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text('Succesfull'),
-                    content: Image.asset("assets/images/Frame 271.png"),
-                    actions: <Widget>[
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: Text('OK'),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              child: Text('Place Order'),
-            ),
-          ],
+          ),
         ),
       ),
     );

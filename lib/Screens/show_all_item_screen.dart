@@ -10,7 +10,6 @@ class SeeAllFoodItemsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Debug print to check the foodItems list
     print("Food items passed to SeeAllFoodItemsScreen: $foodItems");
 
     return Scaffold(

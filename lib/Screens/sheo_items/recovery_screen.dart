@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../Widgets/Custom_textfeild.dart';
+import '../../Widgets/Custom_textfeild.dart';
 
 class RecoveryScreen extends StatelessWidget {
   const RecoveryScreen({super.key});

@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shoes/Screens/splash2.dart';
+import 'package:shoes/Screens/splash_screens/splash2.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -32,8 +32,7 @@ class _splashState extends State<Splash> {
           // Swiped up
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => splash2()), // Replace with your next page
+            MaterialPageRoute(builder: (context) => splash2()),
           );
         }
       },

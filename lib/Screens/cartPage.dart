@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-import '../utils/cart_list.dart'; // Assuming this contains your cart items list
+import '../provider/cart_provider.dart';
 import '../utils/colors.dart';
 import 'check_out.dart';
 
-class CartScreen extends StatefulWidget {
-  @override
-  _CartScreenState createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
+class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Cart'),
@@ -22,10 +20,8 @@ class _CartScreenState extends State<CartScreen> {
               backgroundColor: Colors.white,
             ),
             onPressed: () {
-              // Calculate total price
-              num totalPrice = calculateTotalPrice();
+              num totalPrice = cartProvider.totalPrice;
 
-              // Navigate to CheckoutPage and pass total amount
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -40,14 +36,14 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ],
       ),
-      body: Citems.isEmpty
+      body: cartProvider.items.isEmpty
           ? Center(
               child: Text('Your cart is empty!'),
             )
           : ListView.builder(
-              itemCount: Citems.length,
+              itemCount: cartProvider.items.length,
               itemBuilder: (context, index) {
-                final item = Citems[index];
+                final item = cartProvider.items[index];
                 return Card(
                   margin: EdgeInsets.all(8),
                   child: ListTile(
@@ -68,20 +64,19 @@ class _CartScreenState extends State<CartScreen> {
                         color: primaryColors,
                       ),
                       onPressed: () {
-                        setState(() {
-                          delete(index: index);
-                        });
+                        cartProvider.removeItem(index);
                       },
                     ),
                   ),
                 );
               },
             ),
-      bottomNavigationBar: Citems.isEmpty ? null : _buildTotalSection(),
+      bottomNavigationBar:
+          cartProvider.items.isEmpty ? null : _buildTotalSection(cartProvider),
     );
   }
 
-  Widget _buildTotalSection() {
+  Widget _buildTotalSection(CartProvider cartProvider) {
     return Container(
       color: primaryColors,
       child: Padding(
@@ -90,14 +85,14 @@ class _CartScreenState extends State<CartScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
-              'Total Items: ${Citems.length}',
+              'Total Items: ${cartProvider.items.length}',
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),
             Text(
-              'Total Price: ₹${calculateTotalPrice()}',
+              'Total Price: ₹${cartProvider.totalPrice}',
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -107,13 +102,5 @@ class _CartScreenState extends State<CartScreen> {
         ),
       ),
     );
-  }
-
-  num calculateTotalPrice() {
-    num totalPrice = 0;
-    Citems.forEach((item) {
-      totalPrice += (item['price'] ?? 0) * (item['qty'] ?? 0);
-    });
-    return totalPrice;
   }
 }

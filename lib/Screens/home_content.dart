@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shoes/Screens/sheo_items/adidas.dart';
+import 'package:shoes/Screens/sheo_items/converse.dart';
 import 'package:shoes/Screens/sheo_items/nike.dart';
+import 'package:shoes/Screens/sheo_items/puma.dart';
+import 'package:shoes/Screens/sheo_items/under_armour.dart';
 
 import '../utils/colors.dart';
 
@@ -205,21 +209,73 @@ class _HeaderPartState extends State<HomeContent>
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: TabBarView(
-                  controller: _tabController,
-                  children: ite.map((item) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Food(
-                            onToggleFavorite: (item) {},
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: [
+                          Food(
                             searchQuery: _searchQuery,
+                            onToggleFavorite: (item) {},
+                          ),
+                          Puma(
+                            searchQuery: _searchQuery,
+                            onToggleFavorite: (item) {},
+                          ),
+                          UnderArmour(
+                            searchQuery: _searchQuery,
+                            onToggleFavorite: (item) {},
+                          ),
+                          Adidas(
+                            searchQuery: _searchQuery,
+                            onToggleFavorite: (item) {},
+                          ),
+                          Converse(
+                            searchQuery: _searchQuery,
+                            onToggleFavorite: (item) {},
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "    New Arrivals",
+                          style: TextStyle(fontFamily: "Airbnb"),
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            "see all     ",
+                            style: TextStyle(color: Colors.blue),
                           ),
                         ),
                       ],
-                    );
-                  }).toList(),
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: ite.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  ite[index]['icon']!,
+                                  height: 50,
+                                  width: 50,
+                                ),
+                                Text(ite[index]['name']!),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

@@ -5,12 +5,15 @@ class custom_textfeild extends StatefulWidget {
   final bool obscuretext;
   final bool isPassword;
   final TextEditingController? controller;
+  final String? Function(String?)? validator;
+
   const custom_textfeild({
     super.key,
     required this.labeltext,
     this.obscuretext = true,
     this.isPassword = false,
     this.controller,
+    this.validator,
   });
 
   @override
@@ -19,18 +22,19 @@ class custom_textfeild extends StatefulWidget {
 
 class _custom_textfeildState extends State<custom_textfeild> {
   bool _obscuretext = true;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _obscuretext = widget.obscuretext;
   }
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: widget.controller,
       obscureText: widget.isPassword ? _obscuretext : false,
+      validator: widget.validator,
       decoration: InputDecoration(
         labelText: widget.labeltext,
         border: OutlineInputBorder(
@@ -41,7 +45,8 @@ class _custom_textfeildState extends State<custom_textfeild> {
         suffixIcon: widget.isPassword
             ? IconButton(
                 icon: Icon(
-                    _obscuretext ? Icons.visibility_off : Icons.visibility),
+                  _obscuretext ? Icons.visibility_off : Icons.visibility,
+                ),
                 onPressed: () {
                   setState(() {
                     _obscuretext = !_obscuretext;
