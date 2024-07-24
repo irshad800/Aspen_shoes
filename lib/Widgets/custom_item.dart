@@ -69,7 +69,7 @@ class _ItemsState extends State<custom_items> {
               child: Container(
                 height: 120,
                 width: 130,
-                child: Image.asset(
+                child: Image.network(
                   widget.image!,
                   fit: BoxFit.cover,
                 ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CartProvider with ChangeNotifier {
   List<Map<String, dynamic>> _items = [];
@@ -11,8 +12,17 @@ class CartProvider with ChangeNotifier {
   }
 
   void removeItem(int index) {
-    _items.removeAt(index);
-    notifyListeners();
+    if (index >= 0 && index < _items.length) {
+      _items.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  void updateItem(int index, Map<String, dynamic> updatedItem) {
+    if (index >= 0 && index < _items.length) {
+      _items[index] = updatedItem;
+      notifyListeners();
+    }
   }
 
   num get totalPrice {
@@ -22,4 +32,30 @@ class CartProvider with ChangeNotifier {
     });
     return total;
   }
+}
+
+void addItemToCart({
+  required BuildContext context,
+  String? favName,
+  String? favImage,
+  int? favPrice,
+  int? qty,
+  int? index,
+}) {
+  final cartProvider = Provider.of<CartProvider>(context, listen: false);
+
+  Map<String, dynamic> cartItem = {
+    "name": favName,
+    "image": favImage,
+    "price": favPrice,
+    "qty": qty,
+    "index": index
+  };
+
+  cartProvider.addItem(cartItem);
+}
+
+void removeItemFromCart({required BuildContext context, required int index}) {
+  final cartProvider = Provider.of<CartProvider>(context, listen: false);
+  cartProvider.removeItem(index);
 }

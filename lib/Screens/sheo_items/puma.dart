@@ -55,8 +55,8 @@ class _FoodState extends State<Puma> {
       context,
       MaterialPageRoute(
         builder: (context) => SeeAllFoodItemsScreen(
-          foodItems: foodItems.toList(),
-        ),
+            // foodItems: foodItems.toList(),
+            ),
       ),
     );
   }

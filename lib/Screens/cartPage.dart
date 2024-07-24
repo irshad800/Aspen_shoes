@@ -12,7 +12,7 @@ class CartScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart'),
+        title: const Text('Cart'),
         backgroundColor: primaryColors,
         actions: [
           ElevatedButton(
@@ -20,7 +20,7 @@ class CartScreen extends StatelessWidget {
               backgroundColor: Colors.white,
             ),
             onPressed: () {
-              num totalPrice = cartProvider.totalPrice;
+              final num totalPrice = cartProvider.totalPrice;
 
               Navigator.push(
                 context,
@@ -37,7 +37,7 @@ class CartScreen extends StatelessWidget {
         ],
       ),
       body: cartProvider.items.isEmpty
-          ? Center(
+          ? const Center(
               child: Text('Your cart is empty!'),
             )
           : ListView.builder(
@@ -45,17 +45,17 @@ class CartScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = cartProvider.items[index];
                 return Card(
-                  margin: EdgeInsets.all(8),
+                  margin: const EdgeInsets.all(8),
                   child: ListTile(
                     leading: item['image'] != null
-                        ? Image.asset(
+                        ? Image.network(
                             item['image'],
                             width: 50,
                             height: 50,
                             fit: BoxFit.cover,
                           )
-                        : Icon(Icons.image),
-                    title: Text(item['name'] ?? ''),
+                        : const Icon(Icons.image),
+                    title: Text(item['name'] ?? 'Unnamed Item'),
                     subtitle: Text(
                         'Price: ₹${item['price']} | Quantity: ${item['qty']}'),
                     trailing: IconButton(
@@ -86,17 +86,19 @@ class CartScreen extends StatelessWidget {
           children: [
             Text(
               'Total Items: ${cartProvider.items.length}',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
             Text(
               'Total Price: ₹${cartProvider.totalPrice}',
-              style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
             ),
           ],
         ),

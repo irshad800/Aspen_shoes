@@ -63,225 +63,196 @@ class _HeaderPartState extends State<HomeContent>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: ite.length,
-      child: WillPopScope(
-        onWillPop: () async {
-          if (_searchQuery.isNotEmpty) {
-            clearSearchQuery();
-            return false;
-          }
-          return true;
-        },
-        child: Container(
-          color: Colors.white60,
-          child: Column(
-            children: [
-              const SizedBox(height: 0),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Material(
-                      borderRadius: BorderRadius.circular(10),
-                      child: InkWell(
-                        onTap: () {
-                          Scaffold.of(context).openDrawer();
-                        },
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          alignment: Alignment.center,
-                          child: Image.asset("assets/images/apps-circle.png"),
+        length: ite.length,
+        child: WillPopScope(
+            onWillPop: () async {
+              if (_searchQuery.isNotEmpty) {
+                clearSearchQuery();
+                return false;
+              }
+              return true;
+            },
+            child: Container(
+              color: Colors.white60,
+              child: Column(children: [
+                const SizedBox(height: 0),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Material(
+                        borderRadius: BorderRadius.circular(10),
+                        child: InkWell(
+                          onTap: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                          child: Container(
+                            height: 40,
+                            width: 40,
+                            alignment: Alignment.center,
+                            child: Image.asset("assets/images/apps-circle.png"),
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Text(
-                              "  Store location",
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Icon(
-                                  Icons.location_on,
-                                  color: primaryColors,
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Calicut,KL",
-                                  style: TextStyle(
-                                    color: Colors.grey[400],
+                      Expanded(
+                        child: Center(
+                          child: Column(
+                            children: [
+                              Text(
+                                "  Store location",
+                                style: TextStyle(color: Colors.grey),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Icon(
+                                    Icons.location_on,
+                                    color: primaryColors,
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => UserProfileScreen()));
-                      },
-                      child: CircleAvatar(
-                        radius: 21, // Adjust the radius as needed
-                        backgroundImage:
-                            const AssetImage("assets/images/Group 27@2x.png"),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 30),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                child: TextField(
-                  controller: _searchController,
-                  onChanged: (value) {
-                    setState(() {
-                      _searchQuery = value;
-                    });
-                  },
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.grey)),
-                    enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: Colors.grey)),
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: BorderSide(color: primaryColors)),
-                    hintText: "Looking for shoes",
-                    prefixIcon: Icon(
-                      Icons.search,
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.topLeft,
-                child: TabBar(
-                  controller: _tabController,
-                  isScrollable: true,
-                  indicator: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: primaryColors,
-                  ),
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.grey,
-                  labelStyle: const TextStyle(
-                      fontWeight: FontWeight.bold, fontFamily: "Airbnb"),
-                  tabs: ite.asMap().entries.map((entry) {
-                    int idx = entry.key;
-                    var item = entry.value;
-                    return Tab(
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 5, horizontal: 3),
-                        child: Row(
-                          children: [
-                            Image.asset(item['icon']!, height: 30, width: 30),
-                            SizedBox(width: 3),
-                            if (_selectedTabIndex == idx) Text(item['name']!),
-                          ],
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                  indicatorPadding: const EdgeInsets.only(left: 0),
-                  tabAlignment: TabAlignment.start,
-                ),
-              ),
-              const SizedBox(height: 20),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: [
-                          Food(
-                            searchQuery: _searchQuery,
-                            onToggleFavorite: (item) {},
-                          ),
-                          Puma(
-                            searchQuery: _searchQuery,
-                            onToggleFavorite: (item) {},
-                          ),
-                          UnderArmour(
-                            searchQuery: _searchQuery,
-                            onToggleFavorite: (item) {},
-                          ),
-                          Adidas(
-                            searchQuery: _searchQuery,
-                            onToggleFavorite: (item) {},
-                          ),
-                          Converse(
-                            searchQuery: _searchQuery,
-                            onToggleFavorite: (item) {},
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "    New Arrivals",
-                          style: TextStyle(fontFamily: "Airbnb"),
-                        ),
-                        GestureDetector(
-                          child: Text(
-                            "see all     ",
-                            style: TextStyle(color: Colors.blue),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Calicut,KL",
+                                    style: TextStyle(
+                                      color: Colors.grey[400],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ],
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: ite.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  ite[index]['icon']!,
-                                  height: 50,
-                                  width: 50,
-                                ),
-                                Text(ite[index]['name']!),
-                              ],
-                            ),
-                          );
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => UserProfileScreen()));
                         },
+                        child: CircleAvatar(
+                          radius: 21, // Adjust the radius as needed
+                          backgroundImage:
+                              const AssetImage("assets/images/Group 27@2x.png"),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: TextField(
+                    controller: _searchController,
+                    onChanged: (value) {
+                      setState(() {
+                        _searchQuery = value;
+                      });
+                    },
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: Colors.grey)),
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: Colors.grey)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                          borderSide: BorderSide(color: primaryColors)),
+                      hintText: "Looking for shoes",
+                      prefixIcon: Icon(
+                        Icons.search,
                       ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                const SizedBox(height: 20),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: TabBar(
+                    controller: _tabController,
+                    isScrollable: true,
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: primaryColors,
+                    ),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.grey,
+                    labelStyle: const TextStyle(
+                        fontWeight: FontWeight.bold, fontFamily: "Airbnb"),
+                    tabs: ite.asMap().entries.map((entry) {
+                      int idx = entry.key;
+                      var item = entry.value;
+                      return Tab(
+                        child: Container(
+                          padding:
+                              EdgeInsets.symmetric(vertical: 5, horizontal: 3),
+                          child: Row(
+                            children: [
+                              Image.asset(item['icon']!, height: 30, width: 30),
+                              SizedBox(width: 3),
+                              if (_selectedTabIndex == idx) Text(item['name']!),
+                            ],
+                          ),
+                        ),
+                      );
+                    }).toList(),
+                    indicatorPadding: const EdgeInsets.only(left: 0),
+                    tabAlignment: TabAlignment.start,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            Food(
+                              searchQuery: _searchQuery,
+                            ),
+                            Puma(
+                              searchQuery: _searchQuery,
+                              onToggleFavorite: (item) {},
+                            ),
+                            UnderArmour(
+                              searchQuery: _searchQuery,
+                              onToggleFavorite: (item) {},
+                            ),
+                            Adidas(
+                              searchQuery: _searchQuery,
+                              onToggleFavorite: (item) {},
+                            ),
+                            Converse(
+                              searchQuery: _searchQuery,
+                              onToggleFavorite: (item) {},
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      SizedBox(
+                        height: 100,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: ite.length,
+                          itemBuilder: (context, index) {
+                            return Adidas(
+                                searchQuery: _searchQuery,
+                                onToggleFavorite: (item) {});
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ]),
+            )));
   }
 }
