@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../provider/cart_provider.dart';
 import '../utils/colors.dart';
+import 'cartPage.dart';
 
 class Details extends StatefulWidget {
   const Details({
@@ -45,7 +46,17 @@ class _DetailsState extends State<Details> {
       SnackBar(
         backgroundColor: primaryColors,
         content: const Text('Added to Cart'),
-        duration: const Duration(seconds: 1),
+        duration: const Duration(seconds: 4),
+        action: SnackBarAction(
+          label: 'View Cart',
+          textColor: Colors.white,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => CartScreen()),
+            );
+          },
+        ),
       ),
     );
   }

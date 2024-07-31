@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoes/Screens/home_screen.dart';
 import 'package:shoes/Screens/payment_method.dart';
 import 'package:shoes/utils/colors.dart';
 
@@ -245,7 +246,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreen(),
+                                    ));
                               },
                               child: Text('OK'),
                             ),

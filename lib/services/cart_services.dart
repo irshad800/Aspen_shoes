@@ -2,32 +2,33 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../model/product_model.dart';
+import '../model/cart_model.dart';
 import '../utils/constants.dart';
 
-class ProductServices {
-  Future<List<ProductModel>> getProducts() async {
-    final Uri url = Uri.parse('$baseUrl/api/product/viewProduct');
+class CartServices {
+  Future<List<CartModel>> getCart() async {
+    final Uri url = Uri.parse('$baseUrl/api/cart/viewCart');
 
     try {
       final response = await http.get(url);
+      print("responsecart:${response.body}");
 
       if (response.statusCode == 200) {
-        print(response.body);
+        print("status code:${response.statusCode}");
         final Map<String, dynamic> data = json.decode(response.body);
 
         if (data['data'] is List) {
-          var productList = (data['data'] as List)
-              .map(
-                  (item) => ProductModel.fromJson(item as Map<String, dynamic>))
+          var cartList = (data['data'] as List)
+              .map((item) => CartModel.fromJson(item as Map<String, dynamic>))
               .toList();
+          print(cartList);
 
-          return productList;
+          return cartList;
         } else {
           throw Exception('The key "data" does not contain a list');
         }
       } else {
-        throw Exception('Failed to load products');
+        throw Exception('Failed to load cart items');
       }
     } catch (e) {
       throw Exception('An error occurred: $e');

@@ -7,16 +7,16 @@ import '../../view_model/product_view_mode.dart';
 import '../details.dart';
 import '../show_all_item_screen.dart';
 
-class Food extends StatefulWidget {
+class Nike extends StatefulWidget {
   final String searchQuery;
 
-  Food({Key? key, required this.searchQuery}) : super(key: key);
+  Nike({Key? key, required this.searchQuery}) : super(key: key);
 
   @override
-  State<Food> createState() => _FoodState();
+  State<Nike> createState() => _FoodState();
 }
 
-class _FoodState extends State<Food> {
+class _FoodState extends State<Nike> {
   @override
   void initState() {
     super.initState();
@@ -36,10 +36,6 @@ class _FoodState extends State<Food> {
   Widget build(BuildContext context) {
     return Consumer<ProductViewModel>(
       builder: (context, viewModel, child) {
-        if (viewModel.loading) {
-          return Center(child: CircularProgressIndicator());
-        }
-
         print('Products in Food widget: ${viewModel.products}');
 
         List<ProductModel> filteredFoodItems = viewModel.products
@@ -48,6 +44,8 @@ class _FoodState extends State<Food> {
                 item.name!
                     .toLowerCase()
                     .contains(widget.searchQuery.toLowerCase()))
+            .toList()
+            .reversed
             .toList();
 
         return Column(
@@ -69,44 +67,45 @@ class _FoodState extends State<Food> {
               ],
             ),
             SizedBox(height: 10),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 0,
-                  mainAxisSpacing: 10,
-                  childAspectRatio: 0.82,
+            if (viewModel.loading)
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            else
+              Expanded(
+                child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 0,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.82,
+                  ),
+                  itemCount: filteredFoodItems.length > 2
+                      ? 2
+                      : filteredFoodItems.length,
+                  itemBuilder: (context, index) {
+                    final item = filteredFoodItems[index];
+                    return custom_items(
+                      image: item.image ?? '',
+                      name: item.item ?? '',
+                      price: (item.price ?? 0).toString(),
+                      index: index,
+                      onTapFull: () {},
+                      onTapadd: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => Details(
+                                dImage: item.image ?? '',
+                                dName: item.name ?? '',
+                                dPrice: (item.price ?? 0)),
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
-                itemCount:
-                    filteredFoodItems.length > 2 ? 2 : filteredFoodItems.length,
-                itemBuilder: (context, index) {
-                  final item = filteredFoodItems[index];
-                  return custom_items(
-                    image: item.image ?? '',
-                    name: item.item ?? '',
-                    price: (item.price ?? 0).toString(),
-                    index: index,
-                    onTapFull: () {},
-                    onTapadd: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Details(
-                              dImage: item.image ?? '',
-                              dName: item.name ?? '',
-                              // dCalorie: double.parse(item.rating ?? '0'),
-                              dPrice: (item.price ?? 0)
-
-                              // dRating: double.parse(item.rating ?? '0'),
-                              // dTime: int.parse(item.time ?? '0'),
-                              ),
-                        ),
-                      );
-                    },
-                  );
-                },
               ),
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

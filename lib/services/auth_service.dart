@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shoes/model/auth_model.dart';
+import 'package:shoes/services/shared_preference.dart';
 
 import '../utils/constants.dart';
 
@@ -14,9 +15,9 @@ class AuthServices {
       final response = await http.post(url, body: auth.toJson());
 
       if (response.statusCode == 200) {
+        await shared();
         print('Registration successful');
       } else {
-        // Handle failure
         throw Exception(
             'Failed to register. Status code: ${response.statusCode}');
       }

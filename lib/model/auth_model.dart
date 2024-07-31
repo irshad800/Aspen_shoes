@@ -34,6 +34,7 @@ class Authmodel {
     data['email'] = email;
     data['phone'] = phone;
     data['name'] = name;
+    data['id'] = sId;
     return data;
   }
 }

@@ -214,7 +214,7 @@ class _HeaderPartState extends State<HomeContent>
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            Food(
+                            Nike(
                               searchQuery: _searchQuery,
                             ),
                             Puma(

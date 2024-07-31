@@ -22,8 +22,7 @@ class AuthViewModel extends ChangeNotifier {
         SnackBar(content: Text('Registration successful!')),
       );
 
-      // Navigate to login screen
-      Navigator.pushReplacement(
+       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => Login()),
       );
