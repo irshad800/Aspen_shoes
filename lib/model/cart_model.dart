@@ -1,29 +1,33 @@
 import 'package:shoes/model/product_model.dart';
 
 class CartModel {
-  final String userId;
-  final ProductModel product;
-  final int quantity;
+  String? sId;
+  String? userid;
+  ProductModel? productid;
+  int? quantity;
+  int? iV;
 
-  CartModel({
-    required this.userId,
-    required this.product,
-    required this.quantity,
-  });
+  CartModel({this.sId, this.userid, this.productid, this.quantity, this.iV});
 
-  factory CartModel.fromJson(Map<String, dynamic> json) {
-    return CartModel(
-      userId: json['userId'],
-      product: ProductModel.fromJson(json['product']),
-      quantity: json['quantity'],
-    );
+  CartModel.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    userid = json['userid'];
+    productid = json['productid'] != null
+        ? new ProductModel.fromJson(json['productid'])
+        : null;
+    quantity = json['quantity'];
+    iV = json['__v'];
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'userId': userId,
-      'product': product.toJson(),
-      'quantity': quantity,
-    };
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['userid'] = this.userid;
+    if (this.productid != null) {
+      data['productid'] = this.productid!.toJson();
+    }
+    data['quantity'] = this.quantity;
+    data['__v'] = this.iV;
+    return data;
   }
 }

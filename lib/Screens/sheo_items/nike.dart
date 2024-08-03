@@ -97,6 +97,7 @@ class _FoodState extends State<Nike> {
                           MaterialPageRoute(
                             builder: (context) => Details(
                                 dImage: item.image ?? '',
+                                dId: item.sId,
                                 dName: item.name ?? '',
                                 dPrice: (item.price ?? 0)),
                           ),

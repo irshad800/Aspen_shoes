@@ -100,7 +100,7 @@ class _LoginState extends State<Login> {
                       labeltext: "Password",
                       isPassword: true,
                     ),
-                    // Recovery Password
+
                     Align(
                       alignment: Alignment.centerRight,
                       child: TextButton(
@@ -130,7 +130,7 @@ class _LoginState extends State<Login> {
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   value.login(
-                                      Username: usernameController.text,
+                                      username: usernameController.text,
                                       password: passwordController.text,
                                       context: context);
                                 }
@@ -152,7 +152,6 @@ class _LoginState extends State<Login> {
 
                     SizedBox(height: 10),
 
-                    // Sign In with Google Button
                     ElevatedButton.icon(
                       onPressed: () {},
                       style: ElevatedButton.styleFrom(
@@ -175,7 +174,7 @@ class _LoginState extends State<Login> {
                     SizedBox(
                       height: 170,
                     ),
-                    // Sign Up Text
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

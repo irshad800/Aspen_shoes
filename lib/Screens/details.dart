@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../model/product_model.dart';
 import '../provider/cart_provider.dart';
+import '../services/auth_service.dart';
 import '../utils/colors.dart';
+import '../view_model/cart_view_model.dart';
 import 'cartPage.dart';
 
 class Details extends StatefulWidget {
@@ -14,6 +18,7 @@ class Details extends StatefulWidget {
     this.dTime,
     this.DText,
     this.dPrice,
+    this.dId,
   }) : super(key: key);
 
   final String? dImage;
@@ -23,6 +28,7 @@ class Details extends StatefulWidget {
   final double? dCalorie;
   final int? dTime;
   final String? DText;
+  final String? dId;
 
   @override
   State<Details> createState() => _DetailsState();
@@ -103,6 +109,8 @@ class _DetailsState extends State<Details> {
 
   @override
   Widget build(BuildContext context) {
+    final cartprovider = context.watch<CartViewModel>();
+    final authservise = AuthServices();
     final String text =
         "We recommend making this avocado salad just before you plan to serve it, as the avocados will brown slightly over time and the ingredients will become liquidy. This avocado salad is a delicious combination of ripe avocados, sweet onions, fresh tomatoes, and cilantro. This recipe is so easy to make and very colorful — I think you'll like it!";
 
@@ -322,7 +330,22 @@ class _DetailsState extends State<Details> {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: _addToCart,
+                  onPressed: () {
+                    {
+                      print(authservise.userId);
+                      ProductModel newproduct = ProductModel(
+                          name: widget.dName,
+                          image: widget.dImage,
+                          price: widget.dPrice,
+                          sId: widget.dId);
+
+                      cartprovider.addProductToCart(
+                          userid: authservise.userId!,
+                          product: newproduct,
+                          context: context);
+                    }
+                    ;
+                  },
                   child: const Text(
                     "Add to cart",
                     style: TextStyle(color: Colors.white, fontSize: 18),

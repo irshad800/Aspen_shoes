@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../Widgets/Custom_textfeild.dart';
-import '../../model/auth_model.dart';
 import '../../view_model/auth_view_model.dart';
 
 class SignUp extends StatefulWidget {
@@ -158,32 +157,27 @@ class _SignUpState extends State<SignUp> {
                                 color: Colors.blue,
                               ),
                             )
-                          : ElevatedButton(
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  value.Registration(
-                                    auth: Authmodel(
-                                      name: nameController.text,
-                                      email: emailController.text,
-                                      password: passwordController.text,
-                                      phone: phoneController.text,
-                                      username: usernameController.text,
-                                    ),
-                                    context: context,
-                                  );
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
+                          : Center(
+                              child: SizedBox(
+                                height: 50,
+                                width: 400,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xFF5B9EE1)),
+                                  onPressed: () {
+                                    value.login(
+                                        username: usernameController.text,
+                                        password: passwordController.text,
+                                        context: context);
+                                  },
+                                  child: const Text(
+                                    'Sign in',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
                                 ),
-                                padding: EdgeInsets.symmetric(vertical: 15),
-                                minimumSize: Size(double.infinity, 50),
-                              ),
-                              child: Text(
-                                'Sign In',
-                                style: TextStyle(color: Colors.white),
                               ),
                             ),
                     ),

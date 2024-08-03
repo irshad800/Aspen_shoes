@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shoes/Screens/auth/login_page.dart';
 import 'package:shoes/Screens/home_screen.dart';
 import 'package:shoes/provider/cart_provider.dart';
 import 'package:shoes/services/shared_preference.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        home: auth == true ? HomeScreen() : HomeScreen(),
+        home: auth == true ? HomeScreen() : Login(),
         debugShowCheckedModeBanner: false,
       ),
     );

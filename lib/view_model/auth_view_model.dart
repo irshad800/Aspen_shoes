@@ -1,69 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:shoes/Screens/auth/login_page.dart';
 import 'package:shoes/Screens/home_screen.dart';
-import 'package:shoes/model/auth_model.dart';
 import 'package:shoes/services/auth_service.dart';
+
+import '../model/auth_model.dart';
 
 class AuthViewModel extends ChangeNotifier {
   bool loading = false;
-  final _authService = AuthServices();
+  final _authservice = AuthServices();
 
   Future<void> Registration(
-      {required Authmodel auth, required BuildContext context}) async {
+      {required Authmodel user, required BuildContext context}) async {
     try {
       loading = true;
       notifyListeners();
-      await _authService.register(auth: auth);
-
+      await _authservice.register(user: user);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Login(),
+          ));
       loading = false;
       notifyListeners();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registration successful!')),
-      );
-
-       Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Login()),
-      );
     } catch (e) {
       loading = false;
       notifyListeners();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
     }
   }
 
   Future<void> login(
-      {required Username,
-      required password,
+      {required String username,
+      required String password,
       required BuildContext context}) async {
     try {
       loading = true;
       notifyListeners();
-      await _authService.login(username: Username, password: password);
+      await _authservice.login(username: username, password: password);
 
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HomeScreen(),
+          ));
       loading = false;
       notifyListeners();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Login successful!')),
-      );
-
-      // Navigate to login screen
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
     } catch (e) {
       loading = false;
       notifyListeners();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('An error occurred: $e')),
-      );
     }
   }
 }
