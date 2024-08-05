@@ -13,10 +13,10 @@ class Nike extends StatefulWidget {
   Nike({Key? key, required this.searchQuery}) : super(key: key);
 
   @override
-  State<Nike> createState() => _FoodState();
+  State<Nike> createState() => _NikeState();
 }
 
-class _FoodState extends State<Nike> {
+class _NikeState extends State<Nike> {
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,10 @@ class _FoodState extends State<Nike> {
   void navigateToSeeAll() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => SeeAllFoodItemsScreen()),
+      MaterialPageRoute(
+          builder: (context) => SeeAllFoodItemsScreen(
+                category: 'Nike',
+              )),
     );
   }
 
@@ -36,10 +39,11 @@ class _FoodState extends State<Nike> {
   Widget build(BuildContext context) {
     return Consumer<ProductViewModel>(
       builder: (context, viewModel, child) {
-        print('Products in Food widget: ${viewModel.products}');
+        print('Products in Nike widget: ${viewModel.products}');
 
         List<ProductModel> filteredFoodItems = viewModel.products
             .where((item) =>
+                item.item == "Nike" &&
                 item.name != null &&
                 item.name!
                     .toLowerCase()
@@ -86,12 +90,18 @@ class _FoodState extends State<Nike> {
                   itemBuilder: (context, index) {
                     final item = filteredFoodItems[index];
                     return custom_items(
+                      id: item.sId,
                       image: item.image ?? '',
-                      name: item.item ?? '',
-                      price: (item.price ?? 0).toString(),
+                      item: item.item,
+                      name: item.name ?? '',
+                      price: item.price,
                       index: index,
-                      onTapFull: () {},
+                      onTapFull: () {
+                        print(item.item);
+                      },
                       onTapadd: () {
+                        print(item.item);
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(

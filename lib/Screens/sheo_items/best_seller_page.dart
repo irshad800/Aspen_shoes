@@ -56,8 +56,9 @@ class _FoodState extends State<BestSeller> {
       context,
       MaterialPageRoute(
         builder: (context) => SeeAllFoodItemsScreen(
-            // foodItems: foodItems.toList(),
-            ),
+          category: 'Nike',
+          // foodItems: foodItems.toList(),
+        ),
       ),
     );
   }

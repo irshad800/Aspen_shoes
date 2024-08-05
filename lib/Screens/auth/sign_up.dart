@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shoes/model/auth_model.dart';
 
 import '../../Widgets/Custom_textfeild.dart';
 import '../../view_model/auth_view_model.dart';
@@ -165,9 +166,13 @@ class _SignUpState extends State<SignUp> {
                                   style: ElevatedButton.styleFrom(
                                       backgroundColor: const Color(0xFF5B9EE1)),
                                   onPressed: () {
-                                    value.login(
-                                        username: usernameController.text,
-                                        password: passwordController.text,
+                                    value.Registration(
+                                        user: Authmodel(
+                                            username: usernameController.text,
+                                            password: passwordController.text,
+                                            phone: phoneController.text,
+                                            email: emailController.text,
+                                            name: nameController.text),
                                         context: context);
                                   },
                                   child: const Text(

@@ -3,17 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../model/cart_model.dart';
 import '../model/product_model.dart';
+import '../model/wish_model.dart';
 import '../utils/constants.dart';
 
-class CartService {
-  // Add product to cart
-  Future<void> addProductToCart({
+class WishService {
+  Future<void> addProductToWish({
     required String userid,
     required ProductModel product,
   }) async {
-    final Uri url = Uri.parse('$baseUrl/api/cart/addToCart');
+    final Uri url = Uri.parse('$baseUrl/api/wish/addToWish');
 
     final Map<String, dynamic> cartData = {
       'userid': userid,
@@ -46,30 +45,31 @@ class CartService {
         }
       } else {
         print('3');
-        throw Exception('Failed to add product to cart');
+        throw Exception('Failed to add product to Wishlist');
       }
     } catch (e) {
       throw Exception('An error occurred: $e');
     }
   }
 
-  Future<List<CartModel>> getCartContents(String userid) async {
-    final Uri url = Uri.parse('$baseUrl/api/cart/viewCart/$userid');
+  Future<List<WishModel>> getWishContents(String userid) async {
+    final Uri url = Uri.parse('$baseUrl/api/wish/viewWish/$userid');
 
     try {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
+        print(response.body);
         final Map<String, dynamic> data = json.decode(response.body);
         print('Response data: $data');
 
         if (data['data'] is List) {
-          var cartList = (data['data'] as List)
-              .map((item) => CartModel.fromJson(item as Map<String, dynamic>))
+          var WishList = (data['data'] as List)
+              .map((item) => WishModel.fromJson(item as Map<String, dynamic>))
               .toList();
-          print('Cart list: $cartList');
+          print('Wishlist: $WishList');
 
-          return cartList;
+          return WishList;
         } else {
           throw Exception('The key "data" is missing or the list is null');
         }
@@ -82,13 +82,13 @@ class CartService {
   }
 
   // Remove product from cart
-  Future<void> removeProductFromCart({
+  Future<void> removeProductFromWish({
     required String userid,
     required String productId,
   }) async {
     final Uri url =
-        Uri.parse('$baseUrl/api/cart/removeFromCart/$userid/$productId');
-    final Map<String, dynamic> cartData = {
+        Uri.parse('$baseUrl/api/cart/removeFromWish/$userid/$productId');
+    final Map<String, dynamic> wishData = {
       'userid': userid,
       'productid': productId,
     };
@@ -100,53 +100,13 @@ class CartService {
       final response = await http.delete(
         url,
         headers: {'Content-Type': 'application/json'},
-        body: json.encode(cartData),
+        body: json.encode(wishData),
       );
 
       if (response.statusCode == 200) {
         print('Product removed from cart successfully');
       } else {
-        throw Exception('Failed to remove product from cart-');
-      }
-    } catch (e) {
-      throw Exception('An error occurred: $e');
-    }
-  }
-
-  // Increase product quantity
-  Future<void> increaseQuantity(String cartItemId) async {
-    final Uri url = Uri.parse('$baseUrl/api/cart/increaseQuantity/$cartItemId');
-
-    try {
-      final response = await http.put(
-        url,
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        print('Quantity increased successfully');
-      } else {
-        throw Exception('Failed to increase quantity');
-      }
-    } catch (e) {
-      throw Exception('An error occurred: $e');
-    }
-  }
-
-  // Decrease product quantity
-  Future<void> decreaseQuantity(String cartItemId) async {
-    final Uri url = Uri.parse('$baseUrl/api/cart/decreaseQuantity/$cartItemId');
-
-    try {
-      final response = await http.put(
-        url,
-        headers: {'Content-Type': 'application/json'},
-      );
-
-      if (response.statusCode == 200) {
-        print('Quantity decreased successfully');
-      } else {
-        throw Exception('Failed to decrease quantity');
+        throw Exception('Failed to remove product from wish-');
       }
     } catch (e) {
       throw Exception('An error occurred: $e');

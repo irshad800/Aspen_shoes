@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shoes/Screens/sheo_items/adidas.dart';
+import 'package:shoes/Screens/sheo_items/best_seller_page.dart';
 import 'package:shoes/Screens/sheo_items/converse.dart';
 import 'package:shoes/Screens/sheo_items/nike.dart';
 import 'package:shoes/Screens/sheo_items/puma.dart';
@@ -219,19 +220,15 @@ class _HeaderPartState extends State<HomeContent>
                             ),
                             Puma(
                               searchQuery: _searchQuery,
-                              onToggleFavorite: (item) {},
                             ),
                             UnderArmour(
                               searchQuery: _searchQuery,
-                              onToggleFavorite: (item) {},
                             ),
                             Adidas(
                               searchQuery: _searchQuery,
-                              onToggleFavorite: (item) {},
                             ),
                             Converse(
                               searchQuery: _searchQuery,
-                              onToggleFavorite: (item) {},
                             ),
                           ],
                         ),
@@ -243,9 +240,9 @@ class _HeaderPartState extends State<HomeContent>
                           scrollDirection: Axis.horizontal,
                           itemCount: ite.length,
                           itemBuilder: (context, index) {
-                            return Adidas(
-                                searchQuery: _searchQuery,
-                                onToggleFavorite: (item) {});
+                            return BestSeller(
+                              searchQuery: _searchQuery,
+                            );
                           },
                         ),
                       ),

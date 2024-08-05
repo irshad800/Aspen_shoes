@@ -7,6 +7,10 @@ import '../view_model/product_view_mode.dart';
 import 'details.dart';
 
 class SeeAllFoodItemsScreen extends StatefulWidget {
+  final String category;
+
+  SeeAllFoodItemsScreen({Key? key, required this.category}) : super(key: key);
+
   @override
   State<SeeAllFoodItemsScreen> createState() => _SeeAllFoodItemsScreenState();
 }
@@ -14,6 +18,7 @@ class SeeAllFoodItemsScreen extends StatefulWidget {
 class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
+
   void clearSearchQuery() {
     setState(() {
       _searchQuery = '';
@@ -40,7 +45,9 @@ class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
         .where((item) {
           final itemName = item.name?.toLowerCase() ?? '';
           final searchQuery = _searchQuery.toLowerCase();
-          return itemName.contains(searchQuery);
+          final isCategoryMatch =
+              item.item == widget.category; // Filter by category
+          return isCategoryMatch && itemName.contains(searchQuery);
         })
         .toList()
         .reversed
@@ -48,7 +55,7 @@ class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("NIKE"),
+        title: Text(widget.category), // Display the category in the AppBar
       ),
       body: Column(
         children: [
@@ -110,7 +117,7 @@ class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
                         return custom_items(
                           image: item.image,
                           name: item.name,
-                          price: item.price.toString(),
+                          price: item.price,
                           onTapFull: () {},
                           onTapadd: () {
                             Navigator.push(
@@ -120,6 +127,7 @@ class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
                                   dImage: item.image,
                                   dName: item.name,
                                   dPrice: item.price,
+                                  dId: item.sId,
                                 ),
                               ),
                             );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shoes/Screens/wish_page.dart';
 
 import '../Widgets/custom_drawer.dart';
 import '../utils/colors.dart';
@@ -18,7 +19,7 @@ class _MainScaffoldState extends State<HomeScreen> {
     Container(),
     CartScreen(),
     Container(),
-    Container(),
+    WishScreen(),
   ];
 
   void _onItemTapped(int index) {
