@@ -84,9 +84,7 @@ class _NikeState extends State<Adidas> {
                     mainAxisSpacing: 10,
                     childAspectRatio: 0.82,
                   ),
-                  itemCount: filteredFoodItems.length > 2
-                      ? 2
-                      : filteredFoodItems.length,
+                  itemCount: filteredFoodItems.length,
                   itemBuilder: (context, index) {
                     final item = filteredFoodItems[index];
                     return custom_items(
@@ -117,21 +115,6 @@ class _NikeState extends State<Adidas> {
                   },
                 ),
               ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  "    New Arrivals",
-                  style: TextStyle(fontFamily: "Airbnb"),
-                ),
-                GestureDetector(
-                  child: const Text(
-                    "see all     ",
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                ),
-              ],
-            ),
           ],
         );
       },

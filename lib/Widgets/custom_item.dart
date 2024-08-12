@@ -116,23 +116,12 @@ class _ItemsState extends State<custom_items> {
               ),
             ),
             Positioned(
-              bottom: 63,
-              left: 10,
-              right: 15,
+              bottom: 50,
+              left: 15,
+              right: 10,
               child: Center(
                 child: Text(
                   widget.name!,
-                  style: TextStyle(fontFamily: "Airbnb"),
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: 45,
-              left: 0,
-              right: 15,
-              child: Center(
-                child: Text(
-                  widget.item!,
                   style: TextStyle(fontFamily: "Airbnb"),
                 ),
               ),

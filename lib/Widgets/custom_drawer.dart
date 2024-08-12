@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../Screens/home_screen.dart';
+import '../Screens/profile.dart';
 import '../utils/colors.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -60,11 +61,11 @@ class CustomDrawer extends StatelessWidget {
             ),
             title: Text('Profile'),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => UserProfileScreen(),
-              //     )); // Closes the drawer
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => UserProfileScreen(),
+                  )); // Closes the drawer
             },
           ),
           ListTile(

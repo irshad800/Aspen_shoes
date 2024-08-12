@@ -112,7 +112,7 @@ class _DetailsState extends State<Details> {
     final cartprovider = context.watch<CartViewModel>();
     final authservise = AuthServices();
     final String text =
-        "We recommend making this avocado salad just before you plan to serve it, as the avocados will brown slightly over time and the ingredients will become liquidy. This avocado salad is a delicious combination of ripe avocados, sweet onions, fresh tomatoes, and cilantro. This recipe is so easy to make and very colorful — I think you'll like it!";
+        "We recommend making this Nike just before you plan to serve it, as the avocados will brown slightly over time and the ingredients will become liquidy. This avocado salad is a delicious combination of ripe avocados, sweet onions, fresh tomatoes, and cilantro. This recipe is so easy to make and very colorful — I think you'll like it!";
 
     return Scaffold(
       key: _scaffoldKey,
@@ -195,17 +195,19 @@ class _DetailsState extends State<Details> {
               top: 77,
               left: 20,
               right: 20,
-              child: widget.dImage != null
-                  ? Hero(
-                      tag: widget.dImage!,
-                      child: Image.network(
-                        widget.dImage!,
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                        height: 300,
-                      ),
-                    )
-                  : Container(),
+              child: ClipOval(
+                child: widget.dImage != null
+                    ? Hero(
+                        tag: widget.dImage!,
+                        child: Image.network(
+                          widget.dImage!,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
+                          height: 300,
+                        ),
+                      )
+                    : Container(),
+              ),
             ),
             // Positioned(
             //   top: 137,
@@ -255,10 +257,10 @@ class _DetailsState extends State<Details> {
               ),
             ),
             Positioned(
-              bottom: 180,
+              bottom: 230,
               left: 25,
               child: const Text(
-                "About Food",
+                "About Shoes",
                 style: TextStyle(
                   fontFamily: "Airbnb",
                   fontSize: 20,
@@ -266,7 +268,7 @@ class _DetailsState extends State<Details> {
               ),
             ),
             Positioned(
-              top: 572,
+              top: 552,
               bottom: 80,
               left: 18,
               child: SingleChildScrollView(
