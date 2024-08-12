@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gemini/flutter_gemini.dart';
 import 'package:provider/provider.dart';
 import 'package:shoes/Screens/home_screen.dart';
@@ -15,6 +16,10 @@ import 'package:shoes/view_model/wish_view_model.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   bool? auth = await getSharedPreference();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   Gemini.init(apiKey: GEMINI_API_KEY);
 
   runApp(MyApp(auth: auth));

@@ -6,6 +6,7 @@ import '../provider/cart_provider.dart';
 import '../services/auth_service.dart';
 import '../utils/colors.dart';
 import '../view_model/cart_view_model.dart';
+import 'ar_screen.dart';
 import 'cartPage.dart';
 
 class Details extends StatefulWidget {
@@ -209,21 +210,6 @@ class _DetailsState extends State<Details> {
                     : Container(),
               ),
             ),
-            // Positioned(
-            //   top: 137,
-            //   left: 20,
-            //   right: 20,
-            //   child: widget.dImage != null
-            //       ? Hero(
-            //           tag: widget.dImage!,
-            //           child: Image.network(""
-            //               // "assets/images/Group 136.png",
-            //               //  width: double.infinity,
-            //               //  height: 300,
-            //               ),
-            //         )
-            //       : Container(),
-            // ),
             Positioned(
               top: 350,
               left: 20,
@@ -322,37 +308,65 @@ class _DetailsState extends State<Details> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                height: 55,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: primaryColors,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.all(20),
+                    height: 55,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: primaryColors,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      onPressed: () {
+                        print(authservise.userId);
+                        ProductModel newproduct = ProductModel(
+                            name: widget.dName,
+                            image: widget.dImage,
+                            price: widget.dPrice,
+                            sId: widget.dId);
+
+                        cartprovider.addProductToCart(
+                            userid: authservise.userId!,
+                            product: newproduct,
+                            context: context);
+                      },
+                      child: const Text(
+                        "Add to cart",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ),
                   ),
-                  onPressed: () {
-                    {
-                      print(authservise.userId);
-                      ProductModel newproduct = ProductModel(
-                          name: widget.dName,
-                          image: widget.dImage,
-                          price: widget.dPrice,
-                          sId: widget.dId);
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    height: 55,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      // Inside the Details widget's build method
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                ArPage(imageUrl: widget.dImage),
+                          ),
+                        );
+                      },
 
-                      cartprovider.addProductToCart(
-                          userid: authservise.userId!,
-                          product: newproduct,
-                          context: context);
-                    }
-                    ;
-                  },
-                  child: const Text(
-                    "Add to cart",
-                    style: TextStyle(color: Colors.white, fontSize: 18),
+                      child: const Text(
+                        "View in AR",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ],
