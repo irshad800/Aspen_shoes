@@ -65,4 +65,14 @@ class DatabaseHelper {
     final db = await _getDatabase();
     await db.delete('messages');
   }
+
+  // Delete a specific message by createdAt timestamp
+  Future<void> deleteMessage(String createdAt) async {
+    final db = await _getDatabase();
+    await db.delete(
+      'messages',
+      where: 'createdAt = ?',
+      whereArgs: [createdAt],
+    );
+  }
 }

@@ -19,9 +19,9 @@ class _ChatBotScreenState extends State<ChatBotScreen> {
   ChatUser currentUser = ChatUser(id: "0", firstName: "user");
   ChatUser geminiUser = ChatUser(
     id: "1",
-    firstName: "gemini",
+    firstName: "shoesbot",
     profileImage:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ-qrr9hN7mx4PugAh4vLAkACdDBSjbs3NFgA&usqp=CAU",
+        "https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D",
   );
 
   @override
