@@ -49,9 +49,9 @@ class _splashState extends State<Splash> {
             top: 420,
             left: 110,
             child: Text(
-              'OXY BOOTS',
+              'WALK WAY',
               style: TextStyle(
-                  fontFamily: 'Airbun',
+                  fontFamily: 'Airbnb',
                   fontSize: 30,
                   color: Colors.white,
                   fontWeight: FontWeight.bold),

@@ -39,7 +39,6 @@ class _WishScreenState extends State<WishScreen> {
 
     return WillPopScope(
         onWillPop: () async {
-          // Navigate back to the HomeScreen on back button press
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -58,18 +57,14 @@ class _WishScreenState extends State<WishScreen> {
                 ),
               ),
             ),
-            title: const Row(
-              children: [
-                SizedBox(width: 50),
-                Text(
-                  'WishList',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30,
-                  ),
-                ),
-              ],
+            iconTheme: IconThemeData(color: Colors.white),
+            title: Text(
+              'Favorites',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 30,
+              ),
             ),
           ),
           body: ListView.builder(

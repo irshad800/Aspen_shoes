@@ -55,7 +55,12 @@ class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.category), // Display the category in the AppBar
+        backgroundColor: primaryColors,
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          widget.category,
+          style: TextStyle(fontFamily: "Airbnb", color: Colors.white),
+        ),
       ),
       body: Column(
         children: [
@@ -83,7 +88,7 @@ class _SeeAllFoodItemsScreenState extends State<SeeAllFoodItemsScreen> {
                 focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide: BorderSide(color: primaryColors)),
-                hintText: "Looking for shoes",
+                hintText: "Looking for ${widget.category} shoes",
                 prefixIcon: Icon(
                   Icons.search,
                 ),

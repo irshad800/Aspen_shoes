@@ -308,7 +308,7 @@ class _DetailsState extends State<Details> {
               bottom: 0,
               left: 0,
               right: 0,
-              child: Column(
+              child: Row(
                 children: [
                   Container(
                     margin: const EdgeInsets.all(20),
@@ -344,12 +344,11 @@ class _DetailsState extends State<Details> {
                     height: 55,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: primaryColors,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
                       ),
-                      // Inside the Details widget's build method
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -359,7 +358,6 @@ class _DetailsState extends State<Details> {
                           ),
                         );
                       },
-
                       child: const Text(
                         "View in AR",
                         style: TextStyle(color: Colors.white, fontSize: 18),

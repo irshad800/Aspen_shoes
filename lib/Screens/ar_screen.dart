@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
+import '../utils/colors.dart';
+
 class ArPage extends StatefulWidget {
   final String? imageUrl;
 
@@ -22,21 +24,17 @@ class _ArPageState extends State<ArPage> {
 
   Future<void> _initializeCamera() async {
     try {
-      // Obtain a list of available cameras.
       final cameras = await availableCameras();
       final firstCamera = cameras.first;
 
-      // Initialize the CameraController with the first camera.
       _cameraController = CameraController(
         firstCamera,
         ResolutionPreset.high,
-        imageFormatGroup: ImageFormatGroup.yuv420, // Choose a supported format.
+        imageFormatGroup: ImageFormatGroup.yuv420,
       );
 
-      // Initialize the controller and store the future.
       _initializeControllerFuture = _cameraController.initialize();
 
-      // Update the state once initialization is complete.
       if (mounted) {
         setState(() {});
       }
@@ -54,7 +52,26 @@ class _ArPageState extends State<ArPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("View in AR")),
+      appBar: AppBar(
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [primaryColors, Colors.black],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: Text(
+          'Ar Screen',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 30,
+          ),
+        ),
+      ),
       body: _initializeControllerFuture == null
           ? const Center(child: CircularProgressIndicator())
           : FutureBuilder<void>(
@@ -70,29 +87,13 @@ class _ArPageState extends State<ArPage> {
                       CameraPreview(_cameraController),
                       if (widget.imageUrl != null)
                         Positioned(
-                          top: 100, // Adjust as needed
-                          left: 100, // Adjust as needed
-                          child: Container(
-                            width: 200, // Adjust size as needed
-                            height: 200, // Adjust size as needed
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white, width: 2),
-                              borderRadius: BorderRadius.circular(10),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.5),
-                                  blurRadius: 10,
-                                  offset: Offset(0, 5),
-                                ),
-                              ],
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                widget.imageUrl!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                          top: 100,
+                          left: 100,
+                          child: Image.network(
+                            widget.imageUrl!,
+                            width: 200,
+                            height: 200,
+                            fit: BoxFit.cover,
                           ),
                         ),
                     ],

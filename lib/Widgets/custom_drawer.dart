@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:shoes/Screens/chat_bot_screen.dart';
 
 import '../Screens/home_screen.dart';
 import '../Screens/profile.dart';
+import '../Screens/splash_screens/contact_page.dart';
+import '../provider/theme_view_model.dart';
 import '../utils/colors.dart';
 
 class CustomDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeViewModel>(context);
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -75,11 +82,10 @@ class CustomDrawer extends StatelessWidget {
             ),
             title: Text('Share App'),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => UserProfileScreen(),
-              //     )); // Closes the drawer
+              String appLink =
+                  'https://drive.google.com/file/d/1S6x2aFBBdkMMRbF47hhZTc4GX50WluB8/view?usp=drive_link';
+
+              Share.share('Check out this amazing app: $appLink');
             },
           ),
           ListTile(
@@ -89,11 +95,11 @@ class CustomDrawer extends StatelessWidget {
             ),
             title: Text('Help'),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => UserProfileScreen(),
-              //     )); // Closes the drawer
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ChatBotScreen(),
+                  )); // Closes the drawer
             },
           ),
           ListTile(
@@ -103,13 +109,27 @@ class CustomDrawer extends StatelessWidget {
             ),
             title: Text('Contact'),
             onTap: () {
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) => Contact(),
-              //     )); // Closes the drawer
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ContactPage(),
+                  )); // Closes the drawer
             },
           ),
+          ListTile(
+            leading: Icon(
+              Icons.nightlight_round,
+              color: primaryColors,
+            ),
+            title: Text('Dark Mode'),
+            trailing: Switch(
+              value: themeProvider.isDarkMode,
+              onChanged: (value) {
+                themeProvider.toggleTheme();
+              },
+            ),
+          ),
+          Divider(),
           ListTile(
             leading: Icon(
               Icons.logout,
@@ -118,6 +138,7 @@ class CustomDrawer extends StatelessWidget {
             title: Text('LogOut'),
             onTap: () async {},
           ),
+
           // Add more ListTiles here for more options
         ],
       ),

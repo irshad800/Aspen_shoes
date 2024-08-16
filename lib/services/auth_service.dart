@@ -13,12 +13,14 @@ class AuthServices {
     _loadUserId();
   }
 
+  // Load user ID from SharedPreferences
   Future<void> _loadUserId() async {
     final prefs = await SharedPreferences.getInstance();
     userId = prefs.getString('userId');
     print('Loaded user ID: $userId');
   }
 
+  // Save user ID to SharedPreferences
   Future<void> _saveUserId(String id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('userId', id);
@@ -26,6 +28,7 @@ class AuthServices {
     print('Saved user ID: $userId');
   }
 
+  // Register a new user
   Future<void> register({required Authmodel user}) async {
     final Uri url = Uri.parse('$baseUrl/api/auth/register');
     try {
@@ -45,6 +48,7 @@ class AuthServices {
     }
   }
 
+  // Login user and save user ID
   Future<void> login(
       {required String username, required String password}) async {
     final Uri url = Uri.parse('$baseUrl/api/auth/login');
@@ -86,5 +90,19 @@ class AuthServices {
       print('Error during login: $e');
       throw Exception('An error occurred during login');
     }
+  }
+
+  // Logout user and clear stored user ID
+  Future<void> logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove('userId');
+    userId = null;
+    print('User logged out and ID cleared');
+  }
+
+  // Check if user is already logged in
+  Future<bool> isLoggedIn() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.containsKey('userId');
   }
 }
